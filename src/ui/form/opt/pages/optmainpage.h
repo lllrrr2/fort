@@ -32,6 +32,7 @@ private:
     QPushButton *m_btBackup = nullptr;
     QAction *m_actExport = nullptr;
     QAction *m_actImport = nullptr;
+    QPushButton *m_btDefault = nullptr;
     QPushButton *m_btOk = nullptr;
     QPushButton *m_btApply = nullptr;
     QPushButton *m_btCancel = nullptr;

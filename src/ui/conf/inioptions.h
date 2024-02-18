@@ -96,32 +96,37 @@ public:
     bool progPurgeOnMounted() const { return valueBool("prog/purgeOnMounted"); }
     void setProgPurgeOnMounted(bool v) { setValue("prog/purgeOnMounted", v); }
 
-    constexpr bool graphWindowAlwaysOnTopDefault() const { return true; }
     bool graphWindowAlwaysOnTop() const { return valueBool("graphWindow/alwaysOnTop", true); }
     void setGraphWindowAlwaysOnTop(bool on) { setValue("graphWindow/alwaysOnTop", on); }
 
-    constexpr bool graphWindowFramelessDefault() const { return false; }
     bool graphWindowFrameless() const { return valueBool("graphWindow/frameless"); }
     void setGraphWindowFrameless(bool on) { setValue("graphWindow/frameless", on); }
 
-    constexpr bool graphWindowClickThroughDefault() const { return false; }
     bool graphWindowClickThrough() const { return valueBool("graphWindow/clickThrough"); }
     void setGraphWindowClickThrough(bool on) { setValue("graphWindow/clickThrough", on); }
 
-    constexpr bool graphWindowHideOnHoverDefault() const { return false; }
     bool graphWindowHideOnHover() const { return valueBool("graphWindow/hideOnHover"); }
     void setGraphWindowHideOnHover(bool on) { setValue("graphWindow/hideOnHover", on); }
 
     constexpr int graphWindowOpacityDefault() const { return 90; }
-    int graphWindowOpacity() const { return valueInt("graphWindow/opacity", 90); }
+    int graphWindowOpacity() const
+    {
+        return valueInt("graphWindow/opacity", graphWindowOpacityDefault());
+    }
     void setGraphWindowOpacity(int v) { setValue("graphWindow/opacity", v); }
 
     constexpr int graphWindowHoverOpacityDefault() const { return 95; }
-    int graphWindowHoverOpacity() const { return valueInt("graphWindow/hoverOpacity", 95); }
+    int graphWindowHoverOpacity() const
+    {
+        return valueInt("graphWindow/hoverOpacity", graphWindowHoverOpacityDefault());
+    }
     void setGraphWindowHoverOpacity(int v) { setValue("graphWindow/hoverOpacity", v); }
 
     constexpr int graphWindowMaxSecondsDefault() const { return 500; }
-    int graphWindowMaxSeconds() const { return valueInt("graphWindow/maxSeconds", 500); }
+    int graphWindowMaxSeconds() const
+    {
+        return valueInt("graphWindow/maxSeconds", graphWindowMaxSecondsDefault());
+    }
     void setGraphWindowMaxSeconds(int v) { setValue("graphWindow/maxSeconds", v); }
 
     constexpr QColor graphWindowColorDefault() const { return QColor(255, 255, 255); }
@@ -175,6 +180,9 @@ public:
         return valueColor("graphWindow/gridColor", graphWindowGridColorDefault());
     }
     void setGraphWindowGridColor(const QColor &v) { setColor("graphWindow/gridColor", v); }
+
+public:
+    void resetToDefault();
 };
 
 #endif // INIOPTIONS_H

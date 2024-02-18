@@ -162,6 +162,19 @@ void OptionsController::initConfManagerToEdit()
     confManager()->initIniUserToEdit();
 }
 
+void OptionsController::resetToDefault()
+{
+    windowManager()->showConfirmBox(
+            [&] {
+                confManager()->defaultConfToEdit();
+                confManager()->defaultIniUserToEdit();
+
+                resetEdited();
+                setOptEdited();
+            },
+            tr("Reset to default options?"));
+}
+
 void OptionsController::exportBackup()
 {
     const auto path = DialogUtil::getExistingDir(tr("Export Backup"));

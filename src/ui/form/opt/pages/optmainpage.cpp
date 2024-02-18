@@ -46,6 +46,7 @@ void OptMainPage::onRetranslateUi()
     m_actExport->setText(tr("Export"));
     m_actImport->setText(tr("Import"));
 
+    m_btDefault->setText(tr("Default"));
     m_btOk->setText(tr("OK"));
     m_btApply->setText(tr("Apply"));
     m_btCancel->setText(tr("Cancel"));
@@ -103,10 +104,12 @@ QLayout *OptMainPage::setupDialogButtons()
 {
     setupBackup();
 
+    m_btDefault = new QPushButton();
     m_btOk = new QPushButton();
     m_btApply = new QPushButton();
     m_btCancel = new QPushButton();
 
+    connect(m_btDefault, &QAbstractButton::clicked, ctrl(), &OptionsController::resetToDefault);
     connect(m_btOk, &QAbstractButton::clicked, ctrl(), &OptionsController::saveChanges);
     connect(m_btApply, &QAbstractButton::clicked, ctrl(), &OptionsController::applyChanges);
     connect(m_btCancel, &QAbstractButton::clicked, ctrl(), &OptionsController::closeWindow);
@@ -115,6 +118,7 @@ QLayout *OptMainPage::setupDialogButtons()
 
     auto layout = new QHBoxLayout();
     layout->addWidget(m_btBackup);
+    layout->addWidget(m_btDefault);
     layout->addStretch();
     layout->addWidget(m_btOk);
     layout->addWidget(m_btApply);

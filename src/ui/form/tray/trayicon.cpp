@@ -48,50 +48,6 @@ const QString actionShowFilterModeMenu = QStringLiteral("FilterModeMenu");
 const QString actionShowTrayMenu = QStringLiteral("TrayMenu");
 const QString actionIgnore = QStringLiteral("Ignore");
 
-QString clickNameByType(TrayIcon::ClickType clickType)
-{
-    switch (clickType) {
-    case TrayIcon::SingleClick:
-        return eventSingleClick;
-    case TrayIcon::CtrlSingleClick:
-        return eventCtrlSingleClick;
-    case TrayIcon::AltSingleClick:
-        return eventAltSingleClick;
-    case TrayIcon::DoubleClick:
-        return eventDoubleClick;
-    case TrayIcon::MiddleClick:
-        return eventMiddleClick;
-    case TrayIcon::RightClick:
-        return eventRightClick;
-    default:
-        return QString();
-    }
-}
-
-QString actionNameByType(TrayIcon::ActionType actionType)
-{
-    static const QString actionNames[] = {
-        actionShowHome,
-        actionShowPrograms,
-        actionShowProgramsOrAlert,
-        actionShowOptions,
-        actionShowStatistics,
-        actionShowTrafficGraph,
-        actionSwitchFilterEnabled,
-        actionSwitchBlockTraffic,
-        actionSwitchBlockInetTraffic,
-        actionShowFilterModeMenu,
-        actionShowTrayMenu,
-        actionIgnore,
-    };
-
-    if (actionType > TrayIcon::ActionNone && actionType < TrayIcon::ActionTypeCount) {
-        return actionNames[actionType];
-    }
-
-    return {};
-}
-
 TrayIcon::ActionType actionTypeByName(const QString &name)
 {
     static const QHash<QString, TrayIcon::ActionType> actionTypeNamesMap = {
@@ -111,26 +67,6 @@ TrayIcon::ActionType actionTypeByName(const QString &name)
 
     return name.isEmpty() ? TrayIcon::ActionNone
                           : actionTypeNamesMap.value(name, TrayIcon::ActionNone);
-}
-
-TrayIcon::ActionType defaultActionTypeByClick(TrayIcon::ClickType clickType)
-{
-    switch (clickType) {
-    case TrayIcon::SingleClick:
-        return TrayIcon::ActionShowProgramsOrAlert;
-    case TrayIcon::CtrlSingleClick:
-        return TrayIcon::ActionShowOptions;
-    case TrayIcon::AltSingleClick:
-        return TrayIcon::ActionIgnore;
-    case TrayIcon::DoubleClick:
-        return TrayIcon::ActionIgnore;
-    case TrayIcon::MiddleClick:
-        return TrayIcon::ActionShowStatistics;
-    case TrayIcon::RightClick:
-        return TrayIcon::ActionShowTrayMenu;
-    default:
-        return TrayIcon::ActionNone;
-    }
 }
 
 void setActionCheckable(QAction *action, bool checked = false, const QObject *receiver = nullptr,
@@ -731,6 +667,70 @@ void TrayIcon::setClickEventActionType(IniUser *iniUser, ClickType clickType, Ac
     const QString actionName = actionNameByType(actionType);
 
     iniUser->setTrayAction(eventName, actionName);
+}
+
+QString TrayIcon::clickNameByType(ClickType clickType)
+{
+    switch (clickType) {
+    case SingleClick:
+        return eventSingleClick;
+    case CtrlSingleClick:
+        return eventCtrlSingleClick;
+    case AltSingleClick:
+        return eventAltSingleClick;
+    case DoubleClick:
+        return eventDoubleClick;
+    case MiddleClick:
+        return eventMiddleClick;
+    case RightClick:
+        return eventRightClick;
+    default:
+        return QString();
+    }
+}
+
+QString TrayIcon::actionNameByType(ActionType actionType)
+{
+    static const QString actionNames[] = {
+        actionShowHome,
+        actionShowPrograms,
+        actionShowProgramsOrAlert,
+        actionShowOptions,
+        actionShowStatistics,
+        actionShowTrafficGraph,
+        actionSwitchFilterEnabled,
+        actionSwitchBlockTraffic,
+        actionSwitchBlockInetTraffic,
+        actionShowFilterModeMenu,
+        actionShowTrayMenu,
+        actionIgnore,
+    };
+
+    if (actionType > TrayIcon::ActionNone && actionType < TrayIcon::ActionTypeCount) {
+        return actionNames[actionType];
+    }
+
+    return {};
+}
+
+TrayIcon::ActionType TrayIcon::defaultActionTypeByClick(ClickType clickType)
+{
+    switch (clickType) {
+    case SingleClick:
+        return ActionShowProgramsOrAlert;
+    case CtrlSingleClick:
+        return ActionShowOptions;
+    case AltSingleClick:
+        return ActionIgnore;
+    case DoubleClick:
+        return ActionIgnore;
+    case MiddleClick:
+        return ActionShowStatistics;
+    case RightClick:
+        return ActionShowTrayMenu;
+    default:
+        return ActionNone;
+    }
 }
 
 void TrayIcon::updateClickActions()

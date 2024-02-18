@@ -438,15 +438,23 @@ void ConfManager::setUp()
     setupDb();
 }
 
+void ConfManager::defaultConfToEdit()
+{
+    auto conf = createConf();
+
+    conf->ini().resetToDefault();
+
+    setConfToEdit(conf);
+}
+
 void ConfManager::initConfToEdit()
 {
     if (confToEdit())
         return;
 
-    auto newConf = createConf();
-    newConf->copy(*conf());
+    setConfToEdit(createConf());
 
-    setConfToEdit(newConf);
+    confToEdit()->copy(*conf());
 }
 
 void ConfManager::setConfToEdit(FirewallConf *conf)
@@ -461,14 +469,21 @@ void ConfManager::setConfToEdit(FirewallConf *conf)
     m_confToEdit = conf;
 }
 
+void ConfManager::defaultIniUserToEdit()
+{
+    auto iniUser = createIniUser();
+
+    iniUser->resetToDefault();
+
+    setIniUserToEdit(iniUser);
+}
+
 void ConfManager::initIniUserToEdit()
 {
     if (iniUserToEdit())
         return;
 
-    auto newIniUser = new IniUser(iniUser().settings());
-
-    setIniUserToEdit(newIniUser);
+    setIniUserToEdit(createIniUser());
 }
 
 void ConfManager::setIniUserToEdit(IniUser *iniUser)
@@ -495,8 +510,12 @@ void ConfManager::setConf(FirewallConf *newConf)
 
 FirewallConf *ConfManager::createConf()
 {
-    FirewallConf *conf = new FirewallConf(IoC<FortSettings>(), this);
-    return conf;
+    return new FirewallConf(IoC<FortSettings>(), this);
+}
+
+IniUser *ConfManager::createIniUser()
+{
+    return new IniUser(this->iniUser().settings());
 }
 
 bool ConfManager::setupDb()

@@ -105,7 +105,7 @@ public:
     void setProgAlertWindowMaximized(bool on) { setValue("progAlertWindow/maximized", on); }
 
     bool progAlertWindowAutoShow() const { return valueBool("progAlertWindow/autoShow", true); }
-    void setProgAlertWindowAutoShow(bool on) { setValue("progAlertWindow/autoShow", on); }
+    void setProgAlertWindowAutoShow(bool on) { setValue("progAlertWindow/autoShow", on, true); }
 
     bool progAlertWindowAlwaysOnTop() const { return valueBool("progAlertWindow/alwaysOnTop"); }
     void setProgAlertWindowAlwaysOnTop(bool on) { setValue("progAlertWindow/alwaysOnTop", on); }
@@ -196,6 +196,10 @@ public:
 
 public:
     void saveDefaultIni();
+
+    void resetLanguage();
+    void resetTrayActions();
+    void resetToDefault();
 
 private:
     QString m_defaultLanguage;

@@ -32,9 +32,11 @@ public:
 
     void setUp() override;
 
+    void defaultConfToEdit();
     void initConfToEdit();
     void setConfToEdit(FirewallConf *conf);
 
+    void defaultIniUserToEdit();
     void initIniUserToEdit();
     void setIniUserToEdit(IniUser *iniUser);
 
@@ -76,6 +78,8 @@ signals:
 protected:
     void setConf(FirewallConf *newConf);
     FirewallConf *createConf();
+
+    IniUser *createIniUser();
 
 private:
     bool setupDb();

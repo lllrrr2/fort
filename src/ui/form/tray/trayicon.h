@@ -69,6 +69,10 @@ public:
     static void setClickEventActionType(
             IniUser *iniUser, ClickType clickType, ActionType actionType);
 
+    static QString clickNameByType(ClickType clickType);
+    static QString actionNameByType(ActionType actionType);
+    static ActionType defaultActionTypeByClick(ClickType clickType);
+
 public slots:
     void updateTrayIcon(bool alerted = false);
 
